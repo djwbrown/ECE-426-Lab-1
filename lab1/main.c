@@ -265,10 +265,16 @@ void write_file(char filename[], int numberBytesRemaining, char *data)
     
     /* Find the first available cluster addresses */
     unsigned short fat_idx;
-    for (fat_idx = 0x0002; fat_idx < 0xFFFF; fat_idx++) {
+    for (fat_idx = 0x0002; fat_idx <= 0xFFFF; fat_idx++) {
         if (fat[fat_idx].clusterAddress <= 0x0001) {
             fileDirectory[fileIndex].startAddress = fat_idx;
             break;
+        }
+        
+        /* If no suitable cluster is found */
+        if (fat_idx >= 0xFFFF) {
+            fprintf(stderr, "-- Failed to write file, disk is full! --\n");
+            exit(1);
         }
     }
     
