@@ -93,7 +93,7 @@ int main(int argc, const char * argv[])
     read_file("file4.txt");
     fprintf(stdout, "\n");
     
-    exit(0);
+    return 0;
 }
 
 int getFileIndex(char filename[])
